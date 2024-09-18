@@ -6,7 +6,8 @@ const createButton = (
   disabled = false,
   icon = null,
   type = "button",
-  ariaLabel = ""
+  ariaLabel = "",
+  attributes = {}
 ) => {
   const button = window.document.createElement("button");
   button.type = type;
@@ -38,6 +39,10 @@ const createButton = (
     button.disabled = true;
     button.classList.add("disabled");
   }
+
+  Object.entries(attributes).forEach(([key, value]) => {
+    button.setAttribute(key, value);
+  });
 
   return button;
 };
