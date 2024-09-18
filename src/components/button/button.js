@@ -1,6 +1,11 @@
-const createButton = (text = "", onClick = null, className = "", style = {}, disabled = false) => {
+const createButton = (text = "", onClick = null, className = "", style = {}, disabled = false, icon = null) => {
   const button = window.document.createElement("button");
-  button.textContent = text;
+  if (icon) {
+    const iconElement = window.document.createElement("i");
+    iconElement.classList.add(icon);
+    button.appendChild(iconElement);
+  }
+  button.appendChild(window.document.createTextNode(text));
 
   if (onClick && !disabled) {
     button.addEventListener("click", onClick);
