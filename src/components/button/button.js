@@ -1,4 +1,4 @@
-const createButton = (
+const createButton = ({
   text = "",
   onClick = null,
   className = "",
@@ -8,9 +8,9 @@ const createButton = (
   type = "button",
   ariaLabel = "",
   attributes = {},
-  size = "medium",
-  variant = "default"
-) => {
+  size = "medium", // small, medium, large
+  variant = "default", // primary, secondary, danger, etc.
+} = {}) => {
   const button = window.document.createElement("button");
   button.type = type;
   if (ariaLabel) {
