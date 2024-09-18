@@ -9,7 +9,7 @@ const createButton = ({
   ariaLabel = "",
   attributes = {},
   size = "medium", // small, medium, large
-  variant = "default", // primary, secondary, danger, etc.
+  variant = "default", // primary, secondary, danger
 } = {}) => {
   const button = window.document.createElement("button");
   button.type = type;

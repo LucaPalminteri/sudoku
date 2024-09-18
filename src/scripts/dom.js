@@ -1,4 +1,5 @@
 import { SIZE, GROUP_SIZE } from "./config.js";
+import { createInputField } from "../components/input/input.js";
 
 /**
  * Creates the Sudoku table in the DOM.
@@ -40,7 +41,24 @@ const createTable = (tableDOM) => {
 const fillTable = (tableDOM, table) => {
   tableDOM.querySelectorAll("tr").forEach((row, rowIndex) => {
     row.querySelectorAll("td").forEach((cell, cellIndex) => {
-      cell.innerHTML = table[rowIndex][cellIndex] || "";
+      const value = table[rowIndex][cellIndex];
+      if (value === 0) {
+        const input = createInputField({
+          type: "number",
+          min: 1,
+          max: SIZE,
+          className: "sudoku-input",
+          onChange: (e) => {
+            // Handle value change if needed, e.g., validate input
+            const userInput = e.target.value;
+            console.log(`User entered: ${userInput} at row ${rowIndex}, col ${cellIndex}`);
+          },
+        });
+        cell.appendChild(input);
+      } else {
+        cell.textContent = value;
+        cell.classList.add("pre-filled");
+      }
     });
   });
 };
