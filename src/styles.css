@@ -1,0 +1,115 @@
+/* Reset default margin, padding, and box-sizing for all elements */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Define root variables for theming */
+:root {
+    --font-family: "Roboto", sans-serif;
+    --background-color: #282828;
+    --border-color: #000000;
+    --cell-background-color: #ffffff;
+    --cell-min-size: 40px;
+    --outline-color: #000000;
+    --highlight-border-color: #ffcc00; /* Added a distinctive color for focus */
+    --transition-duration: 0.2s;
+    --group-border-width: 3px; /* Width of the border separating groups */
+    --cell-border-width: 1px; /* Width of the border separating individual cells */
+}
+
+/* Apply base styling to the body */
+body {
+    font-family: var(--font-family);
+    background-color: var(--background-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px; /* Added padding to prevent edge-to-edge content */
+}
+
+/* Style the table body */
+tbody {
+    display: flex;
+    flex-direction: column;
+    border: var(--group-border-width) solid var(--border-color); /* Border around the entire grid */
+}
+
+/* Style the rows in the table */
+.row {
+    display: flex;
+}
+
+/* Style for the group boundaries (e.g., 3x3 blocks in Sudoku) */
+.row-group {
+    border-bottom: var(--group-border-width) solid var(--border-color); /* Thicker border for rows separating groups */
+}
+
+/* Style for the cell boundaries within a group */
+.cell-group {
+    border-right: var(--group-border-width) solid var(--border-color); /* Thicker border for cells separating groups */
+}
+
+/* Style individual cells */
+.cell {
+    background-color: var(--cell-background-color);
+    min-width: var(--cell-min-size);
+    min-height: var(--cell-min-size);
+    border: var(--cell-border-width) solid var(--outline-color); /* Border for individual cells */
+    transition:
+        background-color var(--transition-duration),
+        border var(--transition-duration);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center; /* Centered text in cells */
+    font-size: 1.2rem; /* Increased font size for better readability */
+}
+
+/* Style for focused cells */
+.cell:focus {
+    border: var(--cell-border-width) solid var(--highlight-border-color); /* Adjusted to use border */
+    outline: none; /* Removed default outline */
+    z-index: 1; /* Ensure the focused cell is on top */
+}
+
+/* Highlight row, column, and group with user-friendly colors */
+.cell.highlight-row {
+    background-color: rgba(255, 223, 186, 0.5); /* Soft peach color for row highlight */
+}
+
+.cell.highlight-column {
+    background-color: rgba(186, 255, 223, 0.5); /* Soft mint color for column highlight */
+}
+
+.cell.highlight-group {
+    background-color: rgba(186, 223, 255, 0.5); /* Soft sky blue color for group highlight */
+}
+
+/* Hover effect for cells */
+.cell:hover {
+    background-color: #f2f2f2;
+}
+
+/* Animation for highlighting cells */
+@keyframes highlight {
+    from {
+        background-color: rgba(255, 255, 255, 0.8);
+    }
+    to {
+        background-color: rgba(255, 255, 255, 1);
+    }
+}
+
+/* Optional: Add responsive design adjustments */
+@media (max-width: 600px) {
+    :root {
+        --cell-min-size: 30px;
+    }
+    .cell {
+        font-size: 1rem;
+    }
+}
