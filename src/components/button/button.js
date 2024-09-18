@@ -1,10 +1,25 @@
-const createButton = (text = "", onClick = null, className = "", style = {}, disabled = false, icon = null) => {
+const createButton = (
+  text = "",
+  onClick = null,
+  className = "",
+  style = {},
+  disabled = false,
+  icon = null,
+  type = "button",
+  ariaLabel = ""
+) => {
   const button = window.document.createElement("button");
+  button.type = type;
+  if (ariaLabel) {
+    button.setAttribute("aria-label", ariaLabel);
+  }
+
   if (icon) {
     const iconElement = window.document.createElement("i");
     iconElement.classList.add(icon);
     button.appendChild(iconElement);
   }
+
   button.appendChild(window.document.createTextNode(text));
 
   if (onClick && !disabled) {
