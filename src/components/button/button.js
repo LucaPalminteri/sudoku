@@ -1,8 +1,8 @@
-const createButton = (text = "", onClick = null, className = "", style = {}) => {
+const createButton = (text = "", onClick = null, className = "", style = {}, disabled = false) => {
   const button = window.document.createElement("button");
   button.textContent = text;
 
-  if (onClick) {
+  if (onClick && !disabled) {
     button.addEventListener("click", onClick);
   }
 
@@ -12,6 +12,11 @@ const createButton = (text = "", onClick = null, className = "", style = {}) => 
 
   if (Object.keys(style).length > 0) {
     Object.assign(button.style, style);
+  }
+
+  if (disabled) {
+    button.disabled = true;
+    button.classList.add("disabled");
   }
 
   return button;
