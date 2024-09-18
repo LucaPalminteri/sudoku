@@ -7,7 +7,9 @@ const createButton = (
   icon = null,
   type = "button",
   ariaLabel = "",
-  attributes = {}
+  attributes = {},
+  size = "medium",
+  variant = "default"
 ) => {
   const button = window.document.createElement("button");
   button.type = type;
@@ -38,6 +40,14 @@ const createButton = (
   if (disabled) {
     button.disabled = true;
     button.classList.add("disabled");
+  }
+
+  if (size) {
+    button.classList.add(`button-${size}`);
+  }
+
+  if (variant) {
+    button.classList.add(`button-${variant}`);
   }
 
   Object.entries(attributes).forEach(([key, value]) => {
