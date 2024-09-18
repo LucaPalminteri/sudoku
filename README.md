@@ -19,13 +19,13 @@ Installation
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/yourusername/sudoku-game.git
+    git clone https://github.com/LucaPalminteri/sudoku.git
     ```
 
 2. Navigate to the project directory:
 
     ```bash
-    cd sudoku-game
+    cd sudoku
     ```
 
 3. Open `index.html` in your browser to start the game.
