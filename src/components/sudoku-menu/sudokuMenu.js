@@ -1,10 +1,12 @@
 import { createCard } from "../card/card.js";
 import { createButton } from "../button/button.js";
 import { SIZES, DIFFICULTIES } from "../../scripts/config.js";
+import { getFromLocalStorage } from "../../scripts/store.js";
 
 const createHomeMenu = (onStartGame) => {
   let selectedSize = "EASY";
   let selectedDifficulty = "EASY";
+  const isAlreadyStarted = getFromLocalStorage("sudoku") ? true : false;
 
   const menuCard = createCard({
     title: "Sudoku Game",
@@ -57,9 +59,8 @@ const createHomeMenu = (onStartGame) => {
     buttonContainer.appendChild(difficultyButton);
   });
 
-  // Start game button
   const startButton = createButton({
-    text: "Start Game",
+    text: isAlreadyStarted ? "Continue" : "Start Game",
     onClick: () => onStartGame(selectedSize, selectedDifficulty),
     className: "start-button",
     variant: "primary",

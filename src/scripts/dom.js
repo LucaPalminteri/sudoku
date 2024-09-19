@@ -20,10 +20,15 @@ const createTable = (tableDOM) => {
       const cell = document.createElement("td");
       cell.classList.add("cell");
 
+      // Add data attributes for row and column
+      cell.dataset.row = i;
+      cell.dataset.col = j;
+
       if (isGroupLimit(j)) cell.classList.add("cell-group");
 
       cell.addEventListener("click", () => {
-        console.log(`row: ${row.rowIndex + 1}, cell: ${cell.cellIndex + 1}`);
+        console.log(`row: ${cell.dataset.row}, col: ${cell.dataset.col}`);
+        // Handle cell selection if needed
       });
 
       row.appendChild(cell);
@@ -42,53 +47,50 @@ const fillTable = (tableDOM, table) => {
   tableDOM.querySelectorAll("tr").forEach((row, rowIndex) => {
     row.querySelectorAll("td").forEach((cell, cellIndex) => {
       const value = table[rowIndex][cellIndex];
-      // if (value === 0) {
-      //   continue
-      //   const input = createInputField({
-      //     type: "number",
-      //     min: 1,
-      //     max: SIZE,
-      //     className: "sudoku-input",
-      //     onChange: (e) => {
-      //       // Handle value change if needed, e.g., validate input
-      //       const userInput = e.target.value;
-      //       console.log(`User entered: ${userInput} at row ${rowIndex}, col ${cellIndex}`);
-      //     },
-      //   });
-      //   cell.appendChild(input);
-      // } else {
-      cell.textContent = value;
+
+      // Clear existing content and classes
+      cell.textContent = "";
+      cell.classList.remove("pre-filled", "user-added");
+
       if (value === 0) {
         cell.textContent = "";
+      } else {
+        // Check if the value is pre-filled or user-added
+        const isPreFilled = value > 0;
+
+        switch (value) {
+          case 10:
+            cell.textContent = "A";
+            break;
+          case 11:
+            cell.textContent = "B";
+            break;
+          case 12:
+            cell.textContent = "C";
+            break;
+          case 13:
+            cell.textContent = "D";
+            break;
+          case 14:
+            cell.textContent = "E";
+            break;
+          case 15:
+            cell.textContent = "F";
+            break;
+          case 16:
+            cell.textContent = "G";
+            break;
+          default:
+            cell.textContent = value;
+        }
+
+        // Apply the appropriate class based on whether it's pre-filled or user-added
+        if (isPreFilled) {
+          cell.classList.add("pre-filled");
+        } else {
+          cell.classList.add("user-added");
+        }
       }
-      switch (value) {
-        case 0:
-          cell.textContent = "";
-          break;
-        case 10:
-          cell.textContent = "A";
-          break;
-        case 11:
-          cell.textContent = "B";
-          break;
-        case 12:
-          cell.textContent = "C";
-          break;
-        case 13:
-          cell.textContent = "D";
-          break;
-        case 14:
-          cell.textContent = "E";
-          break;
-        case 15:
-          cell.textContent = "F";
-          break;
-        case 16:
-          cell.textContent = "G";
-          break;
-      }
-      cell.classList.add("pre-filled");
-      // }
     });
   });
 };

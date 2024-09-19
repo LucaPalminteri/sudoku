@@ -70,10 +70,18 @@ export class GameView {
     this.container.appendChild(this.timerDisplay);
   }
 
-  createBoard() {
+  createBoard(size = null) {
     const table = document.createElement("table");
     this.tbody = table.createTBody();
-    const currentSize = this.gameController.getCurrentSize();
+
+    let currentSize = 0;
+
+    if (!size) {
+      size = this.gameController.getCurrentSize();
+    }
+
+    currentSize = size;
+
     createTable(this.tbody, currentSize);
     this.container.appendChild(table);
   }
@@ -92,8 +100,23 @@ export class GameView {
     if (this.selectedCell) {
       const row = parseInt(this.selectedCell.dataset.row);
       const col = parseInt(this.selectedCell.dataset.col);
-      this.gameController.makeMove(row, col, number);
-      this.updateBoard(this.gameController.getCurrentPuzzle());
+      number = parseInt(number);
+
+      if (isNaN(row) || isNaN(col) || isNaN(number)) {
+        console.error("Invalid values for onNumberClick:", { row, col, number, selectedCell: this.selectedCell });
+        return;
+      }
+
+      if (this.gameController.validateMove(row, col, number)) {
+        this.gameController.makeMove(row, col, number);
+        this.updateBoard(this.gameController.getCurrentPuzzle());
+        this.selectedCell.classList.remove("invalid");
+      } else {
+        console.error("Invalid move:", { row, col, number });
+        this.selectedCell.classList.add("invalid");
+      }
+    } else {
+      console.error("No cell is selected.");
     }
   }
 
@@ -110,7 +133,7 @@ export class GameView {
 
     const buttons = [
       { icon: "undo", onClick: () => this.gameController.undo(), label: "Undo" },
-      { icon: "eraser", onClick: () => this.onNumberClick(0), label: "Erase" },
+      { icon: "eraser", onClick: () => this.gameController.erase(5, 5), label: "Erase" },
       { icon: "pencil-line", onClick: () => this.toggleNoteMode(), label: "Notes" },
       { icon: "lightbulb", onClick: () => this.gameController.getHint(), label: "Hint" },
     ];

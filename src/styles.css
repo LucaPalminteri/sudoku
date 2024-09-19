@@ -272,3 +272,24 @@ table {
         max-width: 768px;
     }
 }
+
+.cell {
+    text-align: center; /* Center the numbers */
+    font-size: 18px; /* Adjust the font size as needed */
+}
+
+/* Bold style for pre-filled numbers */
+.cell.pre-filled {
+    font-weight: bold; /* Make the font bold */
+}
+
+/* Lighter style for numbers added by the user */
+.cell.user-added {
+    font-weight: normal; /* Regular font weight */
+    color: #666; /* Lighter color, adjust as needed */
+}
+
+.cell.invalid {
+    background-color: #fdd; /* Light red background for invalid moves */
+    color: #900; /* Dark red text color for invalid moves */
+}

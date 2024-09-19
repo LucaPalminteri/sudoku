@@ -31,10 +31,16 @@ export class GameController {
   }
 
   makeMove(row, col, number) {
+    if (!this.currentPuzzle || isNaN(row) || isNaN(col) || isNaN(number)) {
+      console.error("Invalid move parameters:", { row, col, number, currentPuzzle: this.currentPuzzle });
+      return;
+    }
     if (this.currentPuzzle[row][col] === 0) {
       this.moveHistory.push({ row, col, prevValue: this.currentPuzzle[row][col] });
       this.currentPuzzle[row][col] = number;
       saveToLocalStorage("sudoku", this.currentPuzzle);
+      // Mark this cell as user-added
+      // This might require a different approach based on your current setup
     }
   }
 
@@ -46,6 +52,21 @@ export class GameController {
       return true;
     }
     return false;
+  }
+
+  erase(row, col) {
+    if (this.currentPuzzle && !isNaN(row) && !isNaN(col)) {
+      // Save the previous value for undo functionality
+      if (this.currentPuzzle[row][col] !== 0) {
+        this.moveHistory.push({
+          row,
+          col,
+          prevValue: this.currentPuzzle[row][col],
+        });
+        this.currentPuzzle[row][col] = 0; // Set the cell to 0 to erase it
+        saveToLocalStorage("sudoku", this.currentPuzzle);
+      }
+    }
   }
 
   getHint() {
@@ -63,5 +84,33 @@ export class GameController {
 
   getCurrentPuzzle() {
     return this.currentPuzzle;
+  }
+
+  validateMove(row, col, number) {
+    console.log("Validating move:", { row, col, number });
+    return this.isValidInRow(row, number) && this.isValidInCol(col, number) && this.isValidInGrid(row, col, number);
+  }
+
+  isValidInRow(row, number) {
+    console.log("Validating row:", { row, number });
+    console.log(this.currentPuzzle[row]);
+    return !this.currentPuzzle[row].includes(number);
+  }
+
+  isValidInCol(col, number) {
+    return !this.currentPuzzle.some((row) => row[col] === number);
+  }
+
+  isValidInGrid(row, col, number) {
+    const startRow = Math.floor(row / 3) * 3;
+    const startCol = Math.floor(col / 3) * 3;
+    for (let r = startRow; r < startRow + 3; r++) {
+      for (let c = startCol; c < startCol + 3; c++) {
+        if (this.currentPuzzle[r][c] === number) {
+          return false;
+        }
+      }
+    }
+    return true;
   }
 }
