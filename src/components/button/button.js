@@ -18,8 +18,13 @@ const createButton = ({
   }
 
   if (icon) {
-    const iconElement = window.document.createElement("i");
-    iconElement.classList.add(icon);
+    // const iconElement = window.document.createElement("i");
+    // iconElement.classList.add(icon);
+    // button.appendChild(iconElement);
+
+    const iconElement = document.createElement("img");
+    iconElement.src = `../icons/${icon}.svg`; // Adjust file path and extension accordingly
+    iconElement.alt = `${icon} icon`; // Optional: provide alt text
     button.appendChild(iconElement);
   }
 

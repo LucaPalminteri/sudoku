@@ -1,6 +1,8 @@
-import { getFromLocalStorage, saveToLocalStorage, removeFromLocalStorage } from "./store.js";
+import { getFromLocalStorage, saveToLocalStorage } from "./store.js";
 import { SIZE, DIFFICULTY } from "./config.js";
 import { fillTable } from "./dom.js";
+import { createCustomPuzzle } from "./sudoku.js";
+import Timer from "./timer.js";
 
 const startGame = (tbody, solvedBoard) => {
   let puzzle = getFromLocalStorage("sudoku");

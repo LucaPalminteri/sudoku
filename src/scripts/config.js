@@ -10,7 +10,6 @@ const SIZES = {
   BEGGINER: 4, // 4x4 grid
   EASY: 9, // 9x9 grid
   MEDIUM: 16, // 16x16 grid
-  HARD: 25, // 25x25 grid
 };
 
 /**
@@ -21,7 +20,6 @@ const GROUP_SIZES = {
   BEGGINER: 2, // 2x2 groups for 4x4 grid
   EASY: 3, // 3x3 groups for 9x9 grid
   MEDIUM: 4, // 4x4 groups for 16x16 grid
-  HARD: 5, // 5x5 groups for 25x25 grid
 };
 
 /**
@@ -55,6 +53,6 @@ const SIZE = SIZES.EASY;
  * @type {number}
  * @default Math.floor(SIZE ** 2 * DIFFICULTIES.EASY)
  */
-const DIFFICULTY = Math.floor(SIZE ** 2 * DIFFICULTIES.EASY);
+const DIFFICULTY = Math.floor(SIZE ** 2 * DIFFICULTIES.HARD);
 
-export { SIZE, GROUP_SIZE, DIFFICULTY };
+export { SIZE, GROUP_SIZE, DIFFICULTY, SIZES, GROUP_SIZES, DIFFICULTIES };

@@ -1,31 +1,31 @@
-import { SIZE, DIFFICULTY } from "./config.js";
-import { $ } from "./utils.js";
-import { createTable, fillTable, highlightCell } from "./dom.js";
-import { generateCustomSudoku, createCustomPuzzle } from "./sudoku.js";
-import { getFromLocalStorage, saveToLocalStorage } from "./store.js";
-import { createButton } from "../components/button/button.js";
-import { startGame } from "./newGame.js";
+import { GameView } from "../views/GameView.js";
+import { HomeView } from "../views/HomeView.js";
+import { GameController } from "../controllers/GameController.js";
 
-const $body = $("body");
-const $table = $("table");
-const tbody = $table.createTBody();
+const mainContainer = document.createElement("div");
+mainContainer.id = "main-container";
+document.body.appendChild(mainContainer);
 
-const handleNewGame = () => {
-  const solvedBoard = generateCustomSudoku(SIZE);
-  saveToLocalStorage("sudoku", createCustomPuzzle(solvedBoard, SIZE, DIFFICULTY));
-  fillTable(tbody, getFromLocalStorage("sudoku"));
-};
+const gameController = new GameController();
+const gameView = new GameView(mainContainer, handleNewGame, showHomePage, gameController);
+const homeView = new HomeView(mainContainer, handleStartGame);
 
-const newGameButton = createButton({
-  text: "New Game",
-  onClick: handleNewGame,
-});
-$body.appendChild(newGameButton);
+function showHomePage() {
+  homeView.render();
+}
 
-createTable(tbody);
-const solvedBoard = generateCustomSudoku(SIZE);
-startGame(tbody, solvedBoard);
+function showGamePage() {
+  gameView.render();
+}
 
-document.querySelectorAll(".cell").forEach((cell) => {
-  cell.addEventListener("mouseenter", () => highlightCell(cell));
-});
+function handleStartGame(size, difficulty) {
+  gameController.setGameOptions(size, difficulty);
+  showGamePage();
+}
+
+function handleNewGame(tbody) {
+  const puzzle = gameController.handleNewGame(tbody);
+  gameView.updateBoard(puzzle);
+}
+
+document.addEventListener("DOMContentLoaded", showHomePage);

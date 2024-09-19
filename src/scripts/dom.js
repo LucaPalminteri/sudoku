@@ -42,23 +42,53 @@ const fillTable = (tableDOM, table) => {
   tableDOM.querySelectorAll("tr").forEach((row, rowIndex) => {
     row.querySelectorAll("td").forEach((cell, cellIndex) => {
       const value = table[rowIndex][cellIndex];
+      // if (value === 0) {
+      //   continue
+      //   const input = createInputField({
+      //     type: "number",
+      //     min: 1,
+      //     max: SIZE,
+      //     className: "sudoku-input",
+      //     onChange: (e) => {
+      //       // Handle value change if needed, e.g., validate input
+      //       const userInput = e.target.value;
+      //       console.log(`User entered: ${userInput} at row ${rowIndex}, col ${cellIndex}`);
+      //     },
+      //   });
+      //   cell.appendChild(input);
+      // } else {
+      cell.textContent = value;
       if (value === 0) {
-        const input = createInputField({
-          type: "number",
-          min: 1,
-          max: SIZE,
-          className: "sudoku-input",
-          onChange: (e) => {
-            // Handle value change if needed, e.g., validate input
-            const userInput = e.target.value;
-            console.log(`User entered: ${userInput} at row ${rowIndex}, col ${cellIndex}`);
-          },
-        });
-        cell.appendChild(input);
-      } else {
-        cell.textContent = value;
-        cell.classList.add("pre-filled");
+        cell.textContent = "";
       }
+      switch (value) {
+        case 0:
+          cell.textContent = "";
+          break;
+        case 10:
+          cell.textContent = "A";
+          break;
+        case 11:
+          cell.textContent = "B";
+          break;
+        case 12:
+          cell.textContent = "C";
+          break;
+        case 13:
+          cell.textContent = "D";
+          break;
+        case 14:
+          cell.textContent = "E";
+          break;
+        case 15:
+          cell.textContent = "F";
+          break;
+        case 16:
+          cell.textContent = "G";
+          break;
+      }
+      cell.classList.add("pre-filled");
+      // }
     });
   });
 };
