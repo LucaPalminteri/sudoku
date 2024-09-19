@@ -53,6 +53,6 @@ const SIZE = SIZES.EASY;
  * @type {number}
  * @default Math.floor(SIZE ** 2 * DIFFICULTIES.EASY)
  */
-const DIFFICULTY = Math.floor(SIZE ** 2 * DIFFICULTIES.HARD);
+const DIFFICULTY = Math.floor(SIZE ** 2 * DIFFICULTIES.EASY);
 
 export { SIZE, GROUP_SIZE, DIFFICULTY, SIZES, GROUP_SIZES, DIFFICULTIES };

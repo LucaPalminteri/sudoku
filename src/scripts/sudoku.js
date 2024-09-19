@@ -76,10 +76,11 @@ const isValidCustom = (board, row, col, num, groupSize) => {
  *
  * @param {number[][]} board - The solved Sudoku board.
  * @param {number} size - The size of the Sudoku grid.
- * @param {number} numCellsToRemove - The number of cells to remove from the board to create the puzzle.
+ * @param {number} difficulty - The difficulty of the puzzle.
  * @returns {number[][]} - A 2D array representing the Sudoku puzzle with some cells removed.
  */
-const createCustomPuzzle = (board, size, numCellsToRemove) => {
+const createCustomPuzzle = (board, size, difficulty) => {
+  const numCellsToRemove = Math.floor(size ** 2 * difficulty);
   const puzzle = board.map((row) => row.slice());
   let count = 0;
   while (count < numCellsToRemove) {
