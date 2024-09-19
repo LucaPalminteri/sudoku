@@ -1,6 +1,7 @@
 import { createTable, fillTable, highlightCell } from "../scripts/dom.js";
 import { createButton } from "../components/button/button.js";
 import Timer from "../scripts/timer.js";
+import { DIFFICULTIES } from "../scripts/config.js";
 
 export class GameView {
   constructor(container, onNewGame, onBackToHome, gameController) {
@@ -31,17 +32,34 @@ export class GameView {
     const header = document.createElement("div");
     header.id = "game-header";
 
-    const backButton = document.createElement("button");
-    backButton.innerHTML = "&#8592;"; // Left arrow
+    const backButton = createButton({ icon: "chevron-left", onClick: this.onBackToHome });
     backButton.classList.add("action-button");
     backButton.addEventListener("click", this.onBackToHome);
 
     const difficulty = document.createElement("div");
     difficulty.id = "difficulty";
-    difficulty.textContent = `Difficulty: ${this.gameController.getCurrentDifficulty()}`;
 
-    const settingsButton = document.createElement("button");
-    settingsButton.innerHTML = "&#9881;"; // Gear icon
+    let difficultyName = "";
+
+    switch (this.gameController.getCurrentDifficulty()) {
+      case DIFFICULTIES.BEGGINER:
+        difficultyName = "Begginer";
+        break;
+      case DIFFICULTIES.EASY:
+        difficultyName = "Easy";
+        break;
+      case DIFFICULTIES.MEDIUM:
+        difficultyName = "Medium";
+        break;
+      case DIFFICULTIES.HARD:
+        difficultyName = "Hard";
+        break;
+      default:
+        difficultyName = "Unknown";
+    }
+    difficulty.textContent = `${difficultyName}`;
+
+    const settingsButton = createButton({ icon: "settings", onClick: () => console.log("Settings clicked") });
     settingsButton.classList.add("action-button");
 
     header.append(backButton, difficulty, settingsButton);
@@ -92,15 +110,13 @@ export class GameView {
 
     const buttons = [
       { icon: "undo", onClick: () => this.gameController.undo(), label: "Undo" },
-      { text: "✏️", onClick: () => this.toggleNoteMode(), label: "Notes" },
-      { text: "🗑️", onClick: () => this.onNumberClick(0), label: "Erase" },
-      { text: "💡", onClick: () => this.gameController.getHint(), label: "Hint" },
+      { icon: "eraser", onClick: () => this.onNumberClick(0), label: "Erase" },
+      { icon: "pencil-line", onClick: () => this.toggleNoteMode(), label: "Notes" },
+      { icon: "lightbulb", onClick: () => this.gameController.getHint(), label: "Hint" },
     ];
 
     buttons.forEach((button) => {
       const btn = createButton({ text: button.text, onClick: button.onClick, icon: button.icon });
-      // const btn = document.createElement("button");
-      btn.innerHTML = button.text;
       btn.classList.add("action-button");
       btn.addEventListener("click", button.onClick);
 
@@ -159,10 +175,8 @@ export class GameView {
     fillTable(this.tbody, puzzle);
   }
 
-  // ... (keep the existing methods like setupCellHighlighting, setupCellSelection, onNumberClick, updateBoard)
-
   toggleNoteMode() {
-    // Implement note mode toggling logic here
+    // Implement note mode toggling logic
     console.log("Note mode toggled");
   }
 }
